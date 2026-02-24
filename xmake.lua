@@ -91,6 +91,13 @@ end
 -- local header only dependency, no need to (un)pin version
 add_requires("argh v1.3.2")
 
+local NLOHMANN_JSON_VERSION = "v3.11.3"
+if has_config("pin-deps") then
+    add_requires("nlohmann_json " .. NLOHMANN_JSON_VERSION, {system=system})
+else
+    add_requires("nlohmann_json", {system=system})
+end
+
 target ("goldfish") do
     set_languages("c++17")
     set_targetdir("$(projectdir)/bin/")
@@ -109,6 +116,7 @@ target ("goldfish") do
     add_files ("src/s7_scheme_base.c", {languages = "c11"})
     add_packages("tbox")
     add_packages("argh")
+    add_packages("nlohmann_json")
     add_packages("cpr")
 
     -- S7 configuration from original 3rdparty/s7/xmake.lua
@@ -151,7 +159,7 @@ target("goldfish_repl_wasm")
     set_languages("c++17")
     set_targetdir("$(projectdir)/repl/")
     add_files("src/goldfish_repl.cpp")
-    add_packages("tbox", "argh")
+    add_packages("tbox", "argh", "nlohmann_json")
     add_defines("GOLDFISH_ENABLE_REPL")
 
     -- S7 configuration from original 3rdparty/s7/xmake.lua
