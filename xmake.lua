@@ -92,11 +92,11 @@ end
 add_requires("argh v1.3.2")
 
 local NLOHMANN_JSON_VERSION = "v3.11.3"
-if has_config("pin-deps") then
-    add_requires("nlohmann_json " .. NLOHMANN_JSON_VERSION, {system=system})
-else
-    add_requires("nlohmann_json", {system=system})
-end
+    add_requires("nlohmann_json")
+
+
+local JSON_SCHEMA_VALIDATOR_VERSION = "2.4.0"
+    add_requires("json_schema_validator")
 
 target ("goldfish") do
     set_languages("c++17")
@@ -117,6 +117,7 @@ target ("goldfish") do
     add_packages("tbox")
     add_packages("argh")
     add_packages("nlohmann_json")
+    add_packages("json_schema_validator")
     add_packages("cpr")
 
     -- S7 configuration from original 3rdparty/s7/xmake.lua
@@ -159,7 +160,7 @@ target("goldfish_repl_wasm")
     set_languages("c++17")
     set_targetdir("$(projectdir)/repl/")
     add_files("src/goldfish_repl.cpp")
-    add_packages("tbox", "argh", "nlohmann_json")
+    add_packages("tbox", "argh", "nlohmann_json", "json_schema_validator")
     add_defines("GOLDFISH_ENABLE_REPL")
 
     -- S7 configuration from original 3rdparty/s7/xmake.lua
